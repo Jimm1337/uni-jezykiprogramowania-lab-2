@@ -1,21 +1,21 @@
 package tb.soft;
 
 public interface IUserDialog {
-    void printMessage(String message);
+    void printMessage(final String message);
 
-    void printInfoMessage(String message);
+    void printInfoMessage(final String message);
 
-    void printErrorMessage(String message);
+    void printErrorMessage(final String message);
 
     void clearConsole();
 
-    String enterString(String prompt);
+    String enterString(final String prompt);
 
-    char enterChar(String prompt);
+    char enterChar(final String prompt);
 
-    int enterInt(String prompt);
+    int enterInt(final String prompt);
 
-    float enterFloat(String prompt);
+    float enterFloat(final String prompt);
 
-    double enterDouble(String prompt);
+    double enterDouble(final String prompt);
 }

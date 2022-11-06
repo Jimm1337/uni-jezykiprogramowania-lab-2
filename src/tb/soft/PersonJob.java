@@ -17,14 +17,12 @@ enum PersonJob {
 
     final String jobName;
 
-    PersonJob(String job_name) {
+    PersonJob(final String job_name) {
         jobName = job_name;
     }
-
 
     @Override
     public String toString() {
         return jobName;
     }
-
 }  // koniec klasy enum Job

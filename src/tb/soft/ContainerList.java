@@ -1,29 +1,35 @@
 package tb.soft;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 // TODO: [Wymagania zadania] - List
-public class ContainerList extends ContainerBase<List<Person>> {
-    public ContainerList() {
-        super(new ArrayList<>());
+public class ContainerList<ListType extends List<Person>> extends ContainerBase<ListType> {
+    // Używanie: new ContainerList<>('implementacja interfejsu List'<Person>::new)
+    // Przykład: new ContainerList<>(ArrayList<Person>::new)
+    ContainerList(Supplier<? extends ListType> supplier) {
+        super(supplier);
     }
 
     @Override
-    public void print() {
-        System.out.println("Lista osób:");
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("Lista osób:\n");
         for (var person : container) {
-            System.out.println("- " + person);
+            sb.append("- ").append(person).append("\n");
         }
+
+        return sb.toString();
     }
 
     @Override
-    public void add(Person p) {
+    public void add(final Person p) {
         container.add(p);
     }
 
     @Override
-    public void delete(Person p) {
+    public void remove(final Person p) {
         while (container.contains(p)) {
             container.remove(p);
         }

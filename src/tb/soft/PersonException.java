@@ -7,11 +7,10 @@ import java.io.Serial;
  * występujących przy operacjach na obiektach klasy Person.
  */
 class PersonException extends Exception {
-
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public PersonException(String message) {
+    public PersonException(final String message) {
         super(message);
     }
 

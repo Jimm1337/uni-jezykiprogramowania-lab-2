@@ -1,29 +1,35 @@
 package tb.soft;
 
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.function.Supplier;
 
 // TODO: [Wymagania zadania] - Set
-public class ContainerSet extends ContainerBase<Set<Person>> {
-    public ContainerSet() {
-        super(new TreeSet<>());
+public class ContainerSet<SetType extends Set<Person>> extends ContainerBase<SetType> {
+    // Używanie: new ContainerSet<>('implementacja interfejsu Set'<Person>::new)
+    // Przykład: new ContainerSet<>(TreeSet<Person>::new)
+    ContainerSet(Supplier<? extends SetType> supplier) {
+        super(supplier);
     }
 
     @Override
-    public void print() {
-        System.out.println("Zbiór osób:");
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("Zbiór osób:\n");
         for (var person : container) {
-            System.out.println("- " + person);
+            sb.append("- ").append(person).append("\n");
         }
+
+        return sb.toString();
     }
 
     @Override
-    public void add(Person p) {
+    public void add(final Person p) {
         container.add(p);
     }
 
     @Override
-    public void delete(Person p) {
+    public void remove(final Person p) {
         container.remove(p);
     }
 }

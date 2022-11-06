@@ -28,58 +28,57 @@ import java.io.*;
  * niedozwolonej wartości, któremuś z atrybutów jest zgłaszany wyjątek
  * zawierający stosowny komunikat.
  */
-public class Person {
+public class Person implements Comparable<Person> {
 
     protected String firstName;
     protected String lastName;
     protected int birthYear;
     protected PersonJob job;
 
-
-    public Person(String first_name, String last_name) throws PersonException {
+    public Person(final String first_name, final String last_name) throws PersonException {
         setFirstName(first_name);
         setLastName(last_name);
         job = PersonJob.UNKNOWN;
     }
 
+    public Person(final Person other) {
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
+        this.birthYear = other.birthYear;
+        this.job = other.job;
+    }
 
     public String getFirstName() {
         return firstName;
     }
 
-
-    public void setFirstName(String first_name) throws PersonException {
+    public void setFirstName(final String first_name) throws PersonException {
         if ((first_name == null) || first_name.equals(""))
             throw new PersonException("Pole <Imię> musi być wypełnione.");
         this.firstName = first_name;
     }
 
-
     public String getLastName() {
         return lastName;
     }
 
-
-    public void setLastName(String last_name) throws PersonException {
+    public void setLastName(final String last_name) throws PersonException {
         if ((last_name == null) || last_name.equals(""))
             throw new PersonException("Pole <Nazwisko> musi być wypełnione.");
         this.lastName = last_name;
     }
 
-
     public int getBirthYear() {
         return birthYear;
     }
 
-
-    public void setBirthYear(int birth_year) throws PersonException {
+    public void setBirthYear(final int birth_year) throws PersonException {
         if ((birth_year != 0) && (birth_year < 1900 || birth_year > 2030))
             throw new PersonException("Rok urodzenia musi być w przedziale [1900 - 2030].");
         this.birthYear = birth_year;
     }
 
-
-    public void setBirthYear(String birth_year) throws PersonException {
+    public void setBirthYear(final String birth_year) throws PersonException {
         if (birth_year == null || birth_year.equals("")) {  // pusty łańcuch znaków oznacza rok niezdefiniowany
             setBirthYear(0);
             return;
@@ -91,23 +90,16 @@ public class Person {
         }
     }
 
-
     public PersonJob getJob() {
         return job;
     }
 
-
-    public void setJob(PersonJob job) {
-        this.job = job;
-    }
-
-
-    public void setJob(String job_name) throws PersonException {
+    public void setJob(final String job_name) throws PersonException {
         if (job_name == null || job_name.equals("")) {  // pusty łańcuch znaków oznacza stanowisko niezdefiniowane
             this.job = PersonJob.UNKNOWN;
             return;
         }
-        for (PersonJob job : PersonJob.values()) {
+        for (final PersonJob job : PersonJob.values()) {
             if (job.jobName.equals(job_name)) {
                 this.job = job;
                 return;
@@ -116,19 +108,16 @@ public class Person {
         throw new PersonException("Nie ma takiego stanowiska.");
     }
 
-
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return firstName + " " + lastName + " (" + birthYear + ") : " + job.jobName;
     }
 
-
-    public static void printToFile(PrintWriter writer, Person person) {
+    public static void printToFile(final PrintWriter writer, final Person person) {
         writer.println(person.firstName + "#" + person.lastName + "#" + person.birthYear + "#" + person.job);
     }
 
-
-    public static void printToFile(String file_name, Person person) throws PersonException {
+    public static void printToFile(final String file_name, final Person person) throws PersonException {
         try (PrintWriter writer = new PrintWriter(file_name)) {
             printToFile(writer, person);
         } catch (FileNotFoundException e) {
@@ -136,12 +125,11 @@ public class Person {
         }
     }
 
-
-    public static Person readFromFile(BufferedReader reader) throws PersonException {
+    public static Person readFromFile(final BufferedReader reader) throws PersonException {
         try {
-            String line = reader.readLine();
-            String[] txt = line.split("#");
-            Person person = new Person(txt[0], txt[1]);
+            final String line = reader.readLine();
+            final String[] txt = line.split("#");
+            final Person person = new Person(txt[0], txt[1]);
             person.setBirthYear(txt[2]);
             person.setJob(txt[3]);
             return person;
@@ -150,8 +138,7 @@ public class Person {
         }
     }
 
-
-    public static Person readFromFile(String file_name) throws PersonException {
+    public static Person readFromFile(final String file_name) throws PersonException {
         try (BufferedReader reader = new BufferedReader(new FileReader(file_name))) {
             return Person.readFromFile(reader);
         } catch (FileNotFoundException e) {
@@ -161,4 +148,10 @@ public class Person {
         }
     }
 
+    @Override
+    public int compareTo(final Person o) { //TODO: [Wymagania zadania] - implementacja metody compareTo (alfabetycznie)
+        int diffLastName = this.lastName.compareTo(o.lastName);
+        if (diffLastName != 0) return diffLastName;
+        return this.firstName.compareTo(o.firstName);
+    }
 }  // koniec klasy Person

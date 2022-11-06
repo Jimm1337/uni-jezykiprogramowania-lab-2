@@ -20,44 +20,38 @@ import java.util.Scanner;
 public class UserDialogConsole implements IUserDialog {
 
     private final String ERROR_MESSAGE =
-        """
-        Nieprawidłowe dane!
-        Spróbuj jeszcze raz.
-        """;
+            """
+                    Nieprawidłowe dane!
+                    Spróbuj jeszcze raz.
+                    """;
 
     private final Scanner sc = new Scanner(System.in);
 
-
-    public void printMessage(String message) {
+    public void printMessage(final String message) {
         System.out.println(message);
     }
 
-
-    public void printInfoMessage(String message) {
+    public void printInfoMessage(final String message) {
         System.out.println(message);
         enterString("Nacisnij ENTER");
     }
 
-
-    public void printErrorMessage(String message) {
+    public void printErrorMessage(final String message) {
         System.err.println(message);
         System.err.println("Nacisnij ENTER");
         enterString("");
     }
 
-
     public void clearConsole() {
         System.out.println("\n\n");
     }
 
-
-    public String enterString(String prompt) {
+    public String enterString(final String prompt) {
         System.out.print(prompt);
         return sc.nextLine();
     }
 
-
-    public char enterChar(String prompt) {
+    public char enterChar(final String prompt) {
         boolean isError;
         char c = ' ';
         do {
@@ -72,8 +66,7 @@ public class UserDialogConsole implements IUserDialog {
         return c;
     }
 
-
-    public int enterInt(String prompt) {
+    public int enterInt(final String prompt) {
         boolean isError;
         int i = 0;
         do {
@@ -88,8 +81,7 @@ public class UserDialogConsole implements IUserDialog {
         return i;
     }
 
-
-    public float enterFloat(String prompt) {
+    public float enterFloat(final String prompt) {
         boolean isError;
         float d = 0;
         do {
@@ -104,8 +96,7 @@ public class UserDialogConsole implements IUserDialog {
         return d;
     }
 
-
-    public double enterDouble(String prompt) {
+    public double enterDouble(final String prompt) {
         boolean isError;
         double d = 0;
         do {
@@ -119,8 +110,6 @@ public class UserDialogConsole implements IUserDialog {
         } while (isError);
         return d;
     }
-
-
 } // koniec kasy UserDialogConsole
 
 

@@ -1,34 +1,39 @@
 package tb.soft;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 // TODO: [Wymagania zadania] - Map
-public class ContainerMap extends ContainerBase<Map<String, Person>> {
-    public ContainerMap() {
-        super(new HashMap<>());
+public class ContainerMap<MapType extends Map<Integer, Person>> extends ContainerBase<MapType> {
+    // Używanie: new ContainerMap<>('implementacja interfejsu Map'<String, Person>::new)
+    // Przykład: new ContainerMap<>(HashMap<String, Person>::new)
+    ContainerMap(Supplier<? extends MapType> supplier) {
+        super(supplier);
     }
 
     @Override
-    public void print() {
-        System.out.println("Mapa osób:");
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("Mapa osób:\n");
         for (var personEntry : container.entrySet()) {
-            System.out.println(personEntry.getKey() + " -> " + personEntry.getValue());
+            sb.append(personEntry.getKey()).append(" -> ").append(personEntry.getValue()).append("\n");
         }
+
+        return sb.toString();
     }
 
     @Override
-    public void add(Person p) {
-        container.put(generateKey(p), p);
+    public void add(final Person p) {
+        container.put(getKey(p), p);
     }
 
     @Override
-    public void delete(Person p) {
-        final var key = generateKey(p);
-        container.remove(key);
+    public void remove(final Person p) {
+        container.remove(getKey(p));
     }
 
-    private String generateKey(Person p) {
-        return p.toString();
+    private Integer getKey(final Person p) {
+        return p.hashCode();
     }
 }
