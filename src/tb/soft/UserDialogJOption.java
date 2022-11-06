@@ -2,7 +2,7 @@ package tb.soft;
 
 import javax.swing.*;
 
-public class JOptionUserDialog extends ConsoleUserDialog{
+public class UserDialogJOption extends UserDialogConsole implements IUserDialog {
     @Override
     public void printMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.PLAIN_MESSAGE);
