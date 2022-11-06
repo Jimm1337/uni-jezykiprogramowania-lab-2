@@ -98,7 +98,6 @@ public class PersonApp {
                         Person.printToFile(file_name, currentPerson);
                         UI.printInfoMessage("Dane aktualnej osoby zostały zapisane do pliku " + file_name);
                     }
-
                     break;
                     case 0:
                         // zakończenie działania programu
