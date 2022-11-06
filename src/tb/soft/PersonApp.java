@@ -20,32 +20,32 @@ public class PersonApp {
 
     private static final String GREETING_MESSAGE =
             """
-                    Program PersonApp
-                    Autor: Oskar Gusta
-                    Data:  06.11.2022 r.
-                    """;
+            Program PersonApp
+            Autor: Oskar Gusta
+            Data:  06.11.2022 r.
+            """;
 
 
     private static final String MENU =
             """
-                    M E N U   G Ł Ó W N E
-                    1 - Podaj dane nowej osoby
-                    2 - Usuń dane osoby   
-                    3 - Modyfikuj dane osoby
-                    4 - Wczytaj dane z pliku
-                    5 - Zapisz dane do pliku
-                    0 - Zakończ program
-                    """;
+            M E N U   G Ł Ó W N E
+            1 - Podaj dane nowej osoby
+            2 - Usuń dane osoby   
+            3 - Modyfikuj dane osoby
+            4 - Wczytaj dane z pliku
+            5 - Zapisz dane do pliku
+            0 - Zakończ program
+            """;
 
     private static final String CHANGE_MENU =
             """
-                    Co zmienić?
-                    1 - Imię
-                    2 - Nazwisko
-                    3 - Rok urodzenia
-                    4 - Stanowisko
-                    0 - Powrót do menu głównego
-                    """;
+            Co zmienić?
+            1 - Imię
+            2 - Nazwisko
+            3 - Rok urodzenia
+            4 - Stanowisko
+            0 - Powrót do menu głównego
+            """;
 
     private static final IUserDialog UI = new UserDialogJOption();
 
@@ -91,9 +91,9 @@ public class PersonApp {
 
         if (person != null) {
             sb.append("Aktualna osoba: \n")
-                    .append("      Imię: ").append(person.getFirstName()).append("\n")
-                    .append("  Nazwisko: ").append(person.getLastName()).append("\n")
-                    .append("   Rok ur.: ").append(person.getBirthYear()).append("\n")
+                    .append("Imię: ").append(person.getFirstName()).append("\n")
+                    .append("Nazwisko: ").append(person.getLastName()).append("\n")
+                    .append("Rok ur.: ").append(person.getBirthYear()).append("\n")
                     .append("Stanowisko: ").append(person.getJob()).append("\n");
         } else
             sb.append("Brak danych osoby\n");
@@ -119,7 +119,8 @@ public class PersonApp {
             person = new Person(first_name, last_name);
             person.setBirthYear(birth_year);
             person.setJob(job_name);
-        } catch (PersonException e) { // Wychwycenie błędu gdy nie są spełnione ograniczenia nałożone na dopuszczalne wartości.
+        } catch (
+                PersonException e) { // Wychwycenie błędu gdy nie są spełnione ograniczenia nałożone na dopuszczalne wartości.
             UI.printErrorMessage(e.getMessage());
             return null;
         }
@@ -145,7 +146,9 @@ public class PersonApp {
                     case 2 -> person.setLastName(UI.enterString("Podaj nazwisko: "));
                     case 3 -> person.setBirthYear(UI.enterString("Podaj rok ur.: "));
                     case 4 -> person.setJob(UI.enterString("Podaj stanowisko: "));
-                    case 0 -> { return; }
+                    case 0 -> {
+                        return;
+                    }
                     default -> UI.printErrorMessage("Niepoprawny wybór!");
                 }
             } catch (PersonException e) {
@@ -186,8 +189,8 @@ public class PersonApp {
 
     private void currentPersonSave() throws PersonException {
         String file_name = UI.enterString("Podaj nazwę pliku: ");
-        currentPerson = Person.readFromFile(file_name);
-        UI.printInfoMessage("Dane aktualnej osoby zostały wczytane z pliku " + file_name);
+        Person.printToFile(file_name, currentPerson);
+        UI.printInfoMessage("Dane aktualnej osoby zostały zapisane do pliku " + file_name);
     }
 
 
